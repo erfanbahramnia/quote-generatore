@@ -28,15 +28,22 @@ async function getQuotes() {
 getQuotes();
 
 // changing content
-async function changeQuote() {
+function changeQuote() {
     // random num as index for selecting random quote from api 
     const randomNum = Math.round(Math.random() * apiQuotes.length);
     // new quote
-    const newQuote = await apiQuotes[randomNum];
+    const newQuote = apiQuotes[randomNum];
 
     // if the author name is blanked change it to unknown
     if (!newQuote.author) {
         newQuote.author = "Unknown"
+    }
+
+    // check quote length to determine the style
+    if (newQuote.text.length > 100) {
+        quote.classList.add("long-quote");
+    } else {
+        quote.classList.remove("long-quote");
     }
 
     // change quote
