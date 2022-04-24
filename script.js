@@ -1,3 +1,5 @@
+// quote container
+const quoteContainer = document.querySelector("#quote-container")
 // button that generate now quote
 const quoteBtn = document.querySelector(".new-quote");
 // span tag that shows quote
@@ -6,14 +8,32 @@ const quote = document.querySelector("#quote");
 const author = document.querySelector("#author");
 // twitter button
 const twitterBtn = document.querySelector("#twitter");
+// loader div
+const loader = document.querySelector("#loader");
+
 
 // add event to button so change the quote
 quoteBtn.addEventListener("click", changeQuote);
 // open twitter if user wanna share the quote
 twitterBtn.addEventListener("click", tweetQuote)
 
+
 // data will save from api
 let apiQuotes = [];
+
+
+// show loader
+function loading() {
+    loader.hidden = false;
+    quoteContainer.hidden = true;
+}
+
+// hide loader
+function complete() {
+    loader.hidden = true;
+    quoteContainer.hidden = false;
+}
+
 
 // get Quotes from api
 async function getQuotes() {
@@ -37,6 +57,9 @@ function tweetQuote() {
 
 // changing content
 function changeQuote() {
+    // loading because the data doesn't aplied yet
+    loading();
+
     // random num as index for selecting random quote from api 
     const randomNum = Math.round(Math.random() * apiQuotes.length);
     // new quote
@@ -54,11 +77,15 @@ function changeQuote() {
         quote.classList.remove("long-quote");
     }
 
+
+    // show quote, hide loader
     // change quote
     quote.innerText = newQuote["text"];
     // change author
     author.innerText = newQuote["author"];
+    complete();
 }
 
 // On Load
 getQuotes();
+// loading();
