@@ -33,7 +33,11 @@ async function changeQuote() {
     const randomNum = Math.round(Math.random() * apiQuotes.length);
     // new quote
     const newQuote = await apiQuotes[randomNum];
-    console.log(newQuote);
+
+    // if the author name is blanked change it to unknown
+    if (!newQuote.author) {
+        newQuote.author = "Unknown"
+    }
 
     // change quote
     quote.innerText = newQuote["text"];
