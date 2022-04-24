@@ -1,12 +1,16 @@
 // button that generate now quote
-const quoteButton = document.querySelector(".new-quote");
+const quoteBtn = document.querySelector(".new-quote");
 // span tag that shows quote
-const quote = document.querySelector("#quote")
+const quote = document.querySelector("#quote");
 // span tag that shows author of quote
-const author = document.querySelector("#author")
+const author = document.querySelector("#author");
+// twitter button
+const twitterBtn = document.querySelector("#twitter");
 
 // add event to button so change the quote
-quoteButton.addEventListener("click", changeQuote)
+quoteBtn.addEventListener("click", changeQuote);
+// open twitter if user wanna share the quote
+twitterBtn.addEventListener("click", tweetQuote)
 
 // data will save from api
 let apiQuotes = [];
@@ -24,8 +28,12 @@ async function getQuotes() {
     }
 }
 
-// On Load
-getQuotes();
+// tweet quote
+function tweetQuote() {
+    const twitterURl = `https://twitter.com/intent/tweet?text=${quote.textContent} - ${author.textContent}`;
+    window.open(twitterURl, "_blank");
+}
+
 
 // changing content
 function changeQuote() {
@@ -51,3 +59,6 @@ function changeQuote() {
     // change author
     author.innerText = newQuote["author"];
 }
+
+// On Load
+getQuotes();
